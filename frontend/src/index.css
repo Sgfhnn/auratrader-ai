@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-body { margin: 0; background: #0b0f19; }
+body { margin: 0; background: #0b0f19; -webkit-font-smoothing: antialiased; }
 
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #0f172a; }
@@ -11,4 +11,16 @@ body { margin: 0; background: #0b0f19; }
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
+}
+
+/* Mobile touch improvements */
+button, a, select, input, textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Prevent zoom on iOS input focus */
+@media (max-width: 768px) {
+  input[type="number"], input[type="text"], textarea, select {
+    font-size: 16px !important;
+  }
 }
