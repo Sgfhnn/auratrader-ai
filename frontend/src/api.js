@@ -27,6 +27,8 @@ export const api = {
   sentiment: () => req('/api/sentiment', { method: 'POST' }),
   getDataSource: () => req('/api/data-source'),
   getConfig: () => req('/api/config'),
+  getSmaSignal: () => req('/api/sma-signal'),
+  autoTrade: (sid) => req(`/api/auto-trade/${sid}`, { method: 'POST' }),
 };
 
 export function connectWS(onTick) {

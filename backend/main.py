@@ -345,6 +345,63 @@ def get_data_source():
     return {"source": matching_engine.get_data_source()}
 
 
+@app.get("/api/sma-signal")
+def get_sma_signal():
+    price_hist = matching_engine.get_price_history("EUR_USD")
+    if len(price_hist) < config.SMA_SLOW_PERIOD:
+        return {"signal": None, "fast": 0, "slow": 0, "data_points": len(price_hist), "needed": config.SMA_SLOW_PERIOD}
+    fast = sum(price_hist[-config.SMA_FAST_PERIOD:]) / config.SMA_FAST_PERIOD
+    slow = sum(price_hist[-config.SMA_SLOW_PERIOD:]) / config.SMA_SLOW_PERIOD
+    signal = "BUY" if fast > slow else "SELL"
+    return {"signal": signal, "fast": round(fast, 5), "slow": round(slow, 5), "data_points": len(price_hist), "needed": config.SMA_SLOW_PERIOD}
+
+
+@app.post("/api/auto-trade/{session_id}")
+def auto_trade(session_id: str):
+    _get_session(session_id)
+    price_hist = matching_engine.get_price_history("EUR_USD")
+    if len(price_hist) < config.SMA_SLOW_PERIOD:
+        return {"traded": False, "reason": "insufficient_data"}
+
+    sentiment_data = ai_agents.agent_b_market_sentiment()
+    sentiment = sentiment_data.get("sentiment", "NEUTRAL")
+
+    fast = sum(price_hist[-config.SMA_FAST_PERIOD:]) / config.SMA_FAST_PERIOD
+    slow = sum(price_hist[-config.SMA_SLOW_PERIOD:]) / config.SMA_SLOW_PERIOD
+    crossover = "BUY" if fast > slow else "SELL"
+
+    should_trade = (crossover == "BUY" and sentiment == "BULLISH") or (crossover == "SELL" and sentiment == "BEARISH")
+
+    if not should_trade:
+        return {"traded": False, "reason": "no_alignment", "sma": crossover, "sentiment": sentiment}
+
+    positions = storage.get_open_positions(session_id)
+    if any(p["instrument"] == "EUR_USD" for p in positions):
+        return {"traded": False, "reason": "already_has_position"}
+
+    prices = matching_engine.get_latest_prices()
+    lp = prices.get("EUR_USD", {})
+    raw = lp.get("ask" if crossover == "BUY" else "bid", 0.0)
+    if not raw:
+        return {"traded": False, "reason": "no_price"}
+
+    ep = matching_engine.apply_spread_and_slippage(raw, crossover)
+    pip = config.PIP_SIZE
+    sl = ep - config.AUTO_SL_PIPS * pip if crossover == "BUY" else ep + config.AUTO_SL_PIPS * pip
+    tp = ep + config.AUTO_TP_PIPS * pip if crossover == "BUY" else ep - config.AUTO_TP_PIPS * pip
+    tk = storage.open_position(session_id, "EUR_USD", crossover, 0.1, ep, round(sl, 5), round(tp, 5))
+
+    return {
+        "traded": True,
+        "ticket_id": tk,
+        "direction": crossover,
+        "entry_price": ep,
+        "stop_loss": round(sl, 5),
+        "take_profit": round(tp, 5),
+        "sentiment": sentiment,
+    }
+
+
 # ---------------------------------------------------------------------------
 # Config (read-only)
 # ---------------------------------------------------------------------------
