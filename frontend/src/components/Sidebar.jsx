@@ -24,9 +24,12 @@ export default function Sidebar() {
     <>
       {/* Mobile header */}
       <div className="md:hidden fixed top-0 left-0 right-0 h-12 bg-dark-800 border-b border-gray-700/50 flex items-center justify-between px-4 z-50">
-        <div className="text-sm font-semibold text-accent">AuraTrader AI</div>
         <button onClick={() => setOpen(!open)} className="text-gray-400 hover:text-white p-1">
           {open ? <X size={20} /> : <Menu size={20} />}
+        </button>
+        <div className="text-sm font-semibold text-accent">AuraTrader AI</div>
+        <button onClick={logout} className="text-gray-400 hover:text-red-400 p-1">
+          <LogOut size={18} />
         </button>
       </div>
 
@@ -50,11 +53,6 @@ export default function Sidebar() {
               {label}
             </button>
           ))}
-          <button onClick={() => { logout(); setOpen(false); }}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-gray-400 hover:text-red-400 transition-colors">
-            <LogOut size={18} />
-            Sign Out
-          </button>
         </nav>
       </div>
 
