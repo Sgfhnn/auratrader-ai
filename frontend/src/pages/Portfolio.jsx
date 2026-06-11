@@ -35,6 +35,10 @@ export default function Portfolio() {
 
   return (
     <div className="max-w-5xl mx-auto space-y-4">
+      {/* Mobile desktop-mode hint */}
+      <div className="md:hidden text-center text-xs text-gray-500 bg-dark-800 border border-gray-700/50 rounded-lg px-3 py-2">
+        For the best experience, switch to desktop mode or use a computer
+      </div>
       <h1 className="text-lg font-semibold text-white">Portfolio</h1>
 
       {/* Risk overview */}

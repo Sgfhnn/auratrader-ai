@@ -373,6 +373,10 @@ export default function Trading() {
 
   return (
     <div className="max-w-6xl mx-auto space-y-4">
+      {/* Mobile desktop-mode hint */}
+      <div className="md:hidden text-center text-xs text-gray-500 bg-dark-800 border border-gray-700/50 rounded-lg px-3 py-2">
+        For the best experience, switch to desktop mode or use a computer
+      </div>
       <h1 className="text-lg font-semibold text-white">Trading</h1>
 
       <div className="flex gap-1 bg-dark-800 rounded-xl p-1 w-fit">

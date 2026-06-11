@@ -102,6 +102,10 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-4 max-w-7xl mx-auto">
+      {/* Mobile desktop-mode hint */}
+      <div className="md:hidden text-center text-xs text-gray-500 bg-dark-800 border border-gray-700/50 rounded-lg px-3 py-2">
+        For the best experience, switch to desktop mode or use a computer
+      </div>
       {/* Metrics row */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {[
