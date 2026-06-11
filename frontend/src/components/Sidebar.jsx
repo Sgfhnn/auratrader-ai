@@ -23,12 +23,12 @@ export default function Sidebar() {
   return (
     <>
       {/* Mobile header */}
-      <div className="md:hidden fixed top-0 left-0 right-0 h-12 bg-dark-800 border-b border-gray-700/50 flex items-center justify-between px-4 z-50">
-        <button onClick={() => setOpen(!open)} className="text-gray-300 hover:text-white w-10 h-10 flex items-center justify-center rounded-lg hover:bg-dark-700 transition-colors">
+      <div className="md:hidden fixed top-0 left-0 right-0 h-12 bg-dark-800 border-b border-gray-600/50 flex items-center px-2 z-50 shadow-lg">
+        <button onClick={() => setOpen(!open)} className="text-white hover:text-accent w-10 h-10 flex items-center justify-center rounded-lg hover:bg-dark-700 transition-colors">
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
-        <div className="text-sm font-semibold text-accent tracking-wide">AuraTrader AI</div>
-        <button onClick={logout} className="flex items-center gap-1.5 text-gray-400 hover:text-red-400 text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-dark-700 transition-colors">
+        <div className="flex-1 text-center text-sm font-semibold text-white tracking-wide">AuraTrader AI</div>
+        <button onClick={logout} className="flex items-center gap-1.5 text-gray-300 hover:text-red-400 text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-dark-700 transition-colors border border-gray-600/30">
           <LogOut size={14} />
           Sign Out
         </button>
