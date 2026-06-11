@@ -8,6 +8,18 @@ st.set_page_config(page_title="AuraTrader AI", page_icon="⚡", layout="centered
 
 inject_theme()
 
+# Handle signout from mobile header
+if st.query_params.get("signout") == "1":
+    import storage
+    sid = st.session_state.get("session_id")
+    if sid:
+        storage.remove_session(sid)
+    for k in ["session_id", "session_store", "session_start", "db_init",
+              "engine_started", "equity_history", "pending_trade",
+              "sentiment_cache", "auto_log", "last_trade", "auto_active"]:
+        st.session_state.pop(k, None)
+    st.query_params.clear()
+
 st.markdown(
     """
     <style>

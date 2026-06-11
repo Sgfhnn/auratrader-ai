@@ -24,11 +24,12 @@ export default function Sidebar() {
     <>
       {/* Mobile header */}
       <div className="md:hidden fixed top-0 left-0 right-0 h-12 bg-dark-800 border-b border-gray-700/50 flex items-center justify-between px-4 z-50">
-        <button onClick={() => setOpen(!open)} className="text-gray-300 hover:text-white text-xl font-bold w-8 h-8 flex items-center justify-center">
-          {open ? '✕' : '☰'}
+        <button onClick={() => setOpen(!open)} className="text-gray-300 hover:text-white w-10 h-10 flex items-center justify-center rounded-lg hover:bg-dark-700 transition-colors">
+          {open ? <X size={22} /> : <Menu size={22} />}
         </button>
-        <div className="text-sm font-semibold text-accent">AuraTrader AI</div>
-        <button onClick={logout} className="text-gray-400 hover:text-red-400 text-xs font-medium px-2 py-1">
+        <div className="text-sm font-semibold text-accent tracking-wide">AuraTrader AI</div>
+        <button onClick={logout} className="flex items-center gap-1.5 text-gray-400 hover:text-red-400 text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-dark-700 transition-colors">
+          <LogOut size={14} />
           Sign Out
         </button>
       </div>
@@ -44,11 +45,12 @@ export default function Sidebar() {
           </div>
         )}
         <nav className="p-2">
-          {items.map(({ id, label, path }) => (
+          {items.map(({ id, label, icon: Icon, path }) => (
             <button key={id} onClick={() => go(path)}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm transition-colors ${
-                current === id ? 'bg-accent/10 text-accent' : 'text-gray-400 hover:text-gray-200'
+                current === id ? 'bg-accent/10 text-accent' : 'text-gray-400 hover:text-gray-200 hover:bg-dark-700'
               }`}>
+              <Icon size={16} />
               {label}
             </button>
           ))}

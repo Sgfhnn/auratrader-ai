@@ -75,6 +75,18 @@ def render_sidebar() -> None:
             unsafe_allow_html=True,
         )
 
+    # Mobile header (rendered in main body)
+    st.markdown(
+        '<div class="mobile-header">'
+        '<button class="mobile-hamburger" onclick="'
+        'document.querySelector(\'[data-testid=stSidebarCollapseButton]\')?.click()'
+        '">☰</button>'
+        '<span class="mobile-logo">AuraTrader</span>'
+        '<a href="/?signout=1" class="mobile-signout">Sign Out</a>'
+        '</div>',
+        unsafe_allow_html=True,
+    )
+
 
 def render_page_header(title: str, subtitle: str | None = None) -> None:
     st.markdown(

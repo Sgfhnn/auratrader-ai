@@ -594,6 +594,68 @@ INJECTED_CSS = """
     from { opacity: 0; transform: translateY(4px); }
     to { opacity: 1; transform: translateY(0); }
   }
+
+  /* ── Mobile header ─────────────────────────────────── */
+  .mobile-header {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 48px;
+    background: var(--bg-deep);
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+    z-index: 999;
+  }
+  .mobile-hamburger {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.4rem;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .mobile-hamburger:hover {
+    background: var(--bg-card);
+    color: var(--text-primary);
+  }
+  .mobile-logo {
+    font-size: 0.85rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #60a5fa, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.01em;
+  }
+  .mobile-signout {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: all 0.15s;
+    cursor: pointer;
+  }
+  .mobile-signout:hover {
+    color: var(--red);
+    background: var(--red-bg);
+  }
+
+  @media (max-width: 768px) {
+    .mobile-header { display: flex; }
+    .main > div:first-child { padding-top: 48px !important; }
+  }
 </style>
 """
 
