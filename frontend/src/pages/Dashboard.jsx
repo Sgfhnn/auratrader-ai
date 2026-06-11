@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { useSession } from '../App';
 import { api, connectWS } from '../api';
 
@@ -149,16 +150,21 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {/* Tick log */}
-            <div className="h-48 overflow-y-auto font-mono text-xs">
-              {tickLog.length === 0 && <div className="text-gray-600">Waiting for ticks...</div>}
-              {[...tickLog].reverse().map((t, i) => (
-                <div key={i} className="flex justify-between py-0.5 border-b border-gray-800/50">
-                  <span className="text-gray-500">{t.time}</span>
-                  <span className="text-red">{t.bid?.toFixed(5)}</span>
-                  <span className="text-green">{t.ask?.toFixed(5)}</span>
-                </div>
-              ))}
+            {/* Price chart */}
+            <div className="h-56">
+              {tickLog.length === 0 ? (
+                <div className="h-full flex items-center justify-center text-gray-600 text-sm">Waiting for ticks...</div>
+              ) : (
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={tickLog}>
+                    <XAxis dataKey="time" tick={{ fontSize: 10, fill: '#475569' }} interval="preserveStartEnd" />
+                    <YAxis domain={['auto', 'auto']} tick={{ fontSize: 10, fill: '#475569' }} width={70} />
+                    <Tooltip contentStyle={{ background: '#1e293b', border: '1px solid #334155', borderRadius: 8, fontSize: 12 }} />
+                    <Line type="monotone" dataKey="bid" stroke="#ef4444" dot={false} strokeWidth={1.5} />
+                    <Line type="monotone" dataKey="ask" stroke="#22c55e" dot={false} strokeWidth={1.5} />
+                  </LineChart>
+                </ResponsiveContainer>
+              )}
             </div>
           </div>
 

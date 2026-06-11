@@ -1,4 +1,5 @@
 import { LayoutDashboard, TrendingUp, BarChart3, Briefcase, Settings, LogOut } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useSession } from '../App';
 
 const items = [
@@ -9,8 +10,11 @@ const items = [
   { id: 'settings', label: 'Settings', icon: Settings, path: '/settings' },
 ];
 
-export default function Sidebar({ page, setPage }) {
+export default function Sidebar() {
   const { acct, logout } = useSession();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const current = location.pathname.replace('/', '') || 'dashboard';
 
   return (
     <aside className="w-56 bg-dark-800 border-r border-gray-700/50 flex flex-col shrink-0 hidden md:flex">
@@ -26,9 +30,9 @@ export default function Sidebar({ page, setPage }) {
         {items.map(({ id, label, icon: Icon, path }) => (
           <button
             key={id}
-            onClick={() => { setPage(id); window.history.pushState(null, '', path); }}
+            onClick={() => navigate(path)}
             className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-colors ${
-              page === id ? 'bg-accent/10 text-accent' : 'text-gray-400 hover:text-gray-200 hover:bg-dark-700'
+              current === id ? 'bg-accent/10 text-accent' : 'text-gray-400 hover:text-gray-200 hover:bg-dark-700'
             }`}
           >
             <Icon size={16} />

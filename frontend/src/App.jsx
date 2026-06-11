@@ -17,7 +17,6 @@ export default function App() {
   const [sid, setSid] = useState(() => localStorage.getItem('sid'));
   const [acct, setAcct] = useState(null);
   const [prices, setPrices] = useState({});
-  const [page, setPage] = useState('dashboard');
 
   const refreshAcct = useCallback(async () => {
     if (!sid) return;
@@ -50,7 +49,7 @@ export default function App() {
     <SessionCtx.Provider value={{ sid, acct, prices, setPrices, refreshAcct, logout }}>
       <BrowserRouter>
         <div className="flex h-screen overflow-hidden">
-          <Sidebar page={page} setPage={setPage} />
+          <Sidebar />
           <main className="flex-1 overflow-y-auto p-4 md:p-6">
             <Routes>
               <Route path="/" element={<Navigate to="/dashboard" replace />} />
