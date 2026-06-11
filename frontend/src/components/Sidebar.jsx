@@ -1,4 +1,5 @@
 import { LayoutDashboard, TrendingUp, BarChart3, Briefcase, Settings, LogOut } from 'lucide-react';
+import { useSession } from '../App';
 
 const items = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
@@ -9,7 +10,7 @@ const items = [
 ];
 
 export default function Sidebar({ page, setPage }) {
-  const { acct, logout } = require('../App').useSession();
+  const { acct, logout } = useSession();
 
   return (
     <aside className="w-56 bg-dark-800 border-r border-gray-700/50 flex flex-col shrink-0 hidden md:flex">
