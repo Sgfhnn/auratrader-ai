@@ -27,9 +27,14 @@ export default function App() {
   useEffect(() => { refreshAcct(); const t = setInterval(refreshAcct, 3000); return () => clearInterval(t); }, [refreshAcct]);
 
   const createSession = async (balance) => {
-    const { session_id } = await api.createSession(balance);
-    localStorage.setItem('sid', session_id);
-    setSid(session_id);
+    try {
+      const { session_id } = await api.createSession(balance);
+      localStorage.setItem('sid', session_id);
+      setSid(session_id);
+    } catch (err) {
+      console.error('Failed to create session:', err);
+      alert('Cannot reach backend server. Make sure VITE_API_URL is set correctly.');
+    }
   };
 
   const logout = () => {
@@ -43,19 +48,21 @@ export default function App() {
 
   return (
     <SessionCtx.Provider value={{ sid, acct, prices, setPrices, refreshAcct, logout }}>
-      <div className="flex h-screen overflow-hidden">
-        <Sidebar page={page} setPage={setPage} />
-        <main className="flex-1 overflow-y-auto p-4 md:p-6">
-          <Routes>
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/trading" element={<Trading />} />
-            <Route path="/analytics" element={<Analytics />} />
-            <Route path="/portfolio" element={<Portfolio />} />
-            <Route path="/settings" element={<Settings />} />
-          </Routes>
-        </main>
-      </div>
+      <BrowserRouter>
+        <div className="flex h-screen overflow-hidden">
+          <Sidebar page={page} setPage={setPage} />
+          <main className="flex-1 overflow-y-auto p-4 md:p-6">
+            <Routes>
+              <Route path="/" element={<Navigate to="/dashboard" replace />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/trading" element={<Trading />} />
+              <Route path="/analytics" element={<Analytics />} />
+              <Route path="/portfolio" element={<Portfolio />} />
+              <Route path="/settings" element={<Settings />} />
+            </Routes>
+          </main>
+        </div>
+      </BrowserRouter>
     </SessionCtx.Provider>
   );
 }

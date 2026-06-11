@@ -30,9 +30,12 @@ export const api = {
 };
 
 export function connectWS(onTick) {
-  const ws = new WebSocket(`${API.replace(/^http/, 'ws')}/ws/ticks`);
+  const wsUrl = API
+    ? `${API.replace(/^http/, 'ws')}/ws/ticks`
+    : `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.host}/ws/ticks`;
+  const ws = new WebSocket(wsUrl);
   ws.onmessage = (e) => { try { onTick(JSON.parse(e.data)); } catch {} };
-  ws.onclose = () => { setTimeout(() => connectWS(onTick), 3000); };
+  ws.onclose = () => { setTimeout(() => connectWS(onTick), 5000); };
   ws.onerror = () => ws.close();
   return ws;
 }
