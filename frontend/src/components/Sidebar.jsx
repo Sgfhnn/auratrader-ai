@@ -24,12 +24,12 @@ export default function Sidebar() {
     <>
       {/* Mobile header */}
       <div className="md:hidden fixed top-0 left-0 right-0 h-12 bg-dark-800 border-b border-gray-700/50 flex items-center justify-between px-4 z-50">
-        <button onClick={() => setOpen(!open)} className="text-gray-400 hover:text-white p-1">
-          {open ? <X size={20} /> : <Menu size={20} />}
+        <button onClick={() => setOpen(!open)} className="text-gray-300 hover:text-white text-xl font-bold w-8 h-8 flex items-center justify-center">
+          {open ? '✕' : '☰'}
         </button>
         <div className="text-sm font-semibold text-accent">AuraTrader AI</div>
-        <button onClick={logout} className="text-gray-400 hover:text-red-400 p-1">
-          <LogOut size={18} />
+        <button onClick={logout} className="text-gray-400 hover:text-red-400 text-xs font-medium px-2 py-1">
+          Sign Out
         </button>
       </div>
 
@@ -44,12 +44,11 @@ export default function Sidebar() {
           </div>
         )}
         <nav className="p-2">
-          {items.map(({ id, label, icon: Icon, path }) => (
+          {items.map(({ id, label, path }) => (
             <button key={id} onClick={() => go(path)}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm transition-colors ${
                 current === id ? 'bg-accent/10 text-accent' : 'text-gray-400 hover:text-gray-200'
               }`}>
-              <Icon size={18} />
               {label}
             </button>
           ))}
