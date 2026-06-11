@@ -20,7 +20,14 @@ export default function App() {
 
   const refreshAcct = useCallback(async () => {
     if (!sid) return;
-    try { setAcct(await api.getAccount(sid)); } catch {}
+    try {
+      const data = await api.getAccount(sid);
+      setAcct(data);
+    } catch {
+      localStorage.removeItem('sid');
+      setSid(null);
+      setAcct(null);
+    }
   }, [sid]);
 
   useEffect(() => { refreshAcct(); const t = setInterval(refreshAcct, 3000); return () => clearInterval(t); }, [refreshAcct]);
