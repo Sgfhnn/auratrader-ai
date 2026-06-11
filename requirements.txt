@@ -1,0 +1,14 @@
+# AuraTrader AI — Dependencies
+streamlit>=1.40.0
+python-dotenv>=1.0.0
+websockets>=12.0
+requests>=2.31.0
+openai>=1.14.0
+pandas>=2.2.1
+numpy>=2.0.0
+yfinance>=0.2.40
+plotly>=5.20.0
+
+# Development / test
+pytest>=8.0.0
+pytest-timeout>=2.3.0

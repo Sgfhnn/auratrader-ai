@@ -1,0 +1,20 @@
+# Environment variables
+.env
+
+# Database
+auratrader.db
+auratrader.db-shm
+auratrader.db-wal
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# IDE / tooling
+.mimocode/
+
+# Dev docs
+concepts.md
+instruction.md

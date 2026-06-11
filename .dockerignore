@@ -1,0 +1,11 @@
+.env
+.git
+.mimocode
+__pycache__
+*.pyc
+.pytest_cache
+*.db
+*.db-shm
+*.db-wal
+concepts.md
+instruction.md
