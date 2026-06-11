@@ -12,6 +12,10 @@ __pycache__/
 *.egg-info/
 .pytest_cache/
 
+# Node
+frontend/node_modules/
+frontend/dist/
+
 # IDE / tooling
 .mimocode/
 

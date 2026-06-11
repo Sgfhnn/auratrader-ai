@@ -1,15 +1,16 @@
 services:
   - type: web
-    name: auratrader-ai
+    name: auratrader-api
     runtime: python
     repo: https://github.com/Sgfhnn/auratrader-ai
     plan: free
     region: oregon
+    rootDir: backend
     buildCommand: pip install -r requirements.txt
-    startCommand: streamlit run Home.py --server.port=8501 --server.address=0.0.0.0
-    healthCheckPath: /_stcore/health
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
     envVars:
-      - key: STREAMLIT_SERVER_HEADLESS
-        value: "true"
-      - key: STREAMLIT_BROWSER_GATHER_USAGE_STATS
-        value: "false"
+      - key: GROQ_API_KEY
+        sync: false
+      - key: PYTHON_VERSION
+        value: "3.11"
