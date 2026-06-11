@@ -22,7 +22,7 @@ export default function Settings() {
     ['Spread', `${config.spread_pips} pips`],
     ['Max Slippage', `${config.max_slippage_pips} pips`],
     ['Margin Rate', `${((config.margin_rate||0)*100).toFixed(0)}%`],
-    ['Lot Size', `${(config.lot_size||0).toLocale()} units`],
+    ['Lot Size', `${(config.lot_size||0).toLocaleString()} units`],
     ['Pip Size', config.pip_size],
     ['Tick Interval', `${config.tick_interval}s`],
     ['SMA Fast', `${config.sma_fast} ticks`],
