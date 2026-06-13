@@ -1,4 +1,4 @@
-# AuraTrader AI
+# [AuraTrader AI](https://it-agent-support.vercel.app)
 
 AI-powered forex trading simulation platform.
 
